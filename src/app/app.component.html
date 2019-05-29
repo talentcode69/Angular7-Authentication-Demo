@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+    <div class="navbar-nav display-full" *ngIf="loggedin()">
+        <a class="nav-item nav-link pull-right" (click)="logout()">Logout</a>
+        <a class="nav-item nav-link pull-right" routerLink="/userdetail">Update</a>
+        <a class="nav-item nav-link pull-right" routerLink="/">Home</a>
+    </div>
+    <div class="navbar-nav display-full" *ngIf="!loggedin()">
+        <a class="nav-item nav-link pull-right" routerLink="/login">Login</a>
+        <a class="nav-item nav-link pull-right" routerLink="/register">Register</a>
+        <a class="nav-item nav-link pull-right" routerLink="/">Home</a>
+    </div>
+</nav>
+<div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 offset-sm-3">
+                    <app-alert></app-alert>
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>

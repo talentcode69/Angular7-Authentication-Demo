@@ -1,0 +1,7 @@
+.display-full {
+    display: block;
+    width: 100%;
+}
+.pull-right {
+    float: right;
+}
