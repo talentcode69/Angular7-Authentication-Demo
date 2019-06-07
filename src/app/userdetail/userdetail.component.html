@@ -1,9 +1,11 @@
+<div class="row">
+    <div class="col-sm-6">
 <h2> Update </h2>
 <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
       <div><span>id: </span>{{user.id}}</div>
       <label for="userName">User Name:
-        <input type="text" [(ngModel)]="user.userName" formControlName="userName" class="form-control" [ngClass]="{'is-invalid': submited && f.userName.errors}"/>
+        <input type="text" [(ngModel)]="user.username" formControlName="userName" class="form-control" [ngClass]="{'is-invalid': submited && f.userName.errors}"/>
       </label>
       <div *ngIf="submited && f.userName.errors" class="invalid-feedback">
         <div *ngIf="f.userName.errors.required">User Name is required</div>
@@ -27,7 +29,7 @@
   </div>
   <div class="form-group">
     <label for="password">Password:
-      <input type="password" [(ngModel)]="user.password" formControlName="password" class="form-control" [ngClass]="{'is-invalid': submited && f.password.errors}"/>
+      <input type="password" [(ngModel)]="user.pwd" formControlName="password" class="form-control" [ngClass]="{'is-invalid': submited && f.password.errors}"/>
     </label>
     <div *ngIf="submited && f.password.errors" class="invalid-feedback">
       <div *ngIf="f.password.errors.required">Password is required</div>
@@ -39,3 +41,5 @@
     <a (click)="delete()" class="btn btn-danger margin-20">Delete</a>
   </div>
 </form>
+</div>
+</div>

@@ -1,15 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse} from '@angular/common/http';
 import { User } from '../model/user';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  public current_user: User = new User();
+  public current_user: User;
   user_url = 'http://localhost:8000/users/';
+  users: User[];
   constructor(private http: HttpClient) { }
   getAll() {
-    return this.http.get<User[]>(this.user_url);
+    this.http.get(this.user_url).subscribe((res:User[]) => {
+      this.users = res;      
+      console.log(this.users);
+    });
+    return this.users;
+    //return this.http.get(this.user_url);
   }
 
   getById(id: number) {
@@ -17,15 +25,14 @@ export class UserService {
   }
 
   register(user: User) {
-  
-      return this.http.post(this.user_url+'register', user);
+    return this.http.post(this.user_url + 'register', user);
   }
   login(username: String, password: String) {
     const obj = {
       username: username,
-      password: password
+      pwd: password
     };
-    return this.http.post(this.user_url+'login', obj);
+    return this.http.post(this.user_url + 'login', obj);
   }
   update(user: User) {
       return this.http.put(this.user_url +'update/' + user.id, user);
@@ -35,6 +42,6 @@ export class UserService {
       return this.http.delete(this.user_url+'delete/' + id);
   }
   logout() {
-    this.current_user = new User();
+    this.current_user = null;
   }
 }

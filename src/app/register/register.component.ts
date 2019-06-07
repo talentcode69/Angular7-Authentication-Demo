@@ -30,29 +30,29 @@ export class RegisterComponent implements OnInit {
   get f() { return this.registerForm.controls;}
   onSubmit() {
     var user = new User();
-    user.userName = this.f.userName.value;
+    user.username = this.f.userName.value;
     user.firstName = this.f.firstName.value;
     user.lastName = this.f.lastName.value;
-    user.password = this.f.password.value;               
+    user.pwd = this.f.password.value;               
     this.submited = true;
+    console.log(user);
     if (this.registerForm.invalid)
       return;
-    this.userService.register(user)
-      .subscribe(res => {
-        console.log(res['status']+':'+res['id']);
-        this.alertService.success(res['status']);
-        this.userService.current_user.id = res['id'];
-        this.userService.current_user.userName = res['username'];
-        this.userService.current_user.firstName = res['firstName'];
-        this.userService.current_user.lastName = res['lastName'];
-        this.userService.current_user.password = res['pwd'];
+    this.userService.register(user).subscribe((res: User) => {
+      this.userService.current_user = res;
+      if (this.userService.current_user != null)
+      {
+        console.log("success");
+        this.alertService.success("success");
         this.router.navigate(['/']);
-      },
-      error => {
-        this.alertService.error(error);
-        console.log(error);
-        this.submited = false;
-      });
+      }
+      else
+      {
+          this.alertService.error("error");
+          console.log("error");
+          this.submited = false;
+      }
+    });
 
     
   }

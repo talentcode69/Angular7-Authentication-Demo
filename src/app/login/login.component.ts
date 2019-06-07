@@ -30,28 +30,19 @@ export class LoginComponent implements OnInit {
     
     if (this.loginForm.invalid)
       return;
-    this.userService.login(this.f.username.value,this.f.password.value)
-      .subscribe(res => {
-        console.log(res);
-        this.alertService.success(res['status']);
-        if (res) {
-          this.userService.current_user.id = res['id'];
-          this.userService.current_user.userName = res['username'];
-          this.userService.current_user.firstName = res['firstName'];
-          this.userService.current_user.lastName = res['lastName'];
-          this.userService.current_user.password = res['pwd'];
-          console.log(this.userService.current_user);
-          this.router.navigate(['/']);
-        }
-        else {
-          this.alertService.error("Please input correctly");
-          this.submited = false;
-        }
-      },
-      error => {
-        this.alertService.error(error);
-        console.log(error);
+    this.userService.login(this.f.username.value, this.f.password.value).subscribe((res: User) => {
+      this.userService.current_user = res;
+      console.log(this.userService.current_user);
+      if (this.userService.current_user != null)
+      {
+        this.alertService.success("Success");
+        this.router.navigate(['/']);
+      }
+      else {
+        this.alertService.error("Please input correctly");
         this.submited = false;
-      });
+      }
+    });
+    
   }
 }

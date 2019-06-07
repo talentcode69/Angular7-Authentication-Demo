@@ -32,14 +32,15 @@ export class UserdetailComponent implements OnInit {
   }
   get f() { return this.updateForm.controls;}
   getUser() {
+    if (this.userService.current_user == null) {
+      this.router.navigate(['/']);
+      return;
+    }
     console.log(this.userService.current_user.id);
-    this.userService.getById(this.userService.current_user.id).subscribe(user => {
+    this.userService.getById(this.userService.current_user.id).subscribe((user: User) => {
       console.log(user);
-      this.user.id = user['id'];
-      this.user.userName = user['username'];
-      this.user.firstName = user['firstName'];
-      this.user.lastName = user['lastName'];
-      this.user.password = user['pwd'];
+      this.user = user;
+
     });
   }
   delete() {
@@ -54,6 +55,7 @@ export class UserdetailComponent implements OnInit {
     this.submited = true;
     if (this.updateForm.invalid)
       return;
+    console.log(this.user);
     this.userService.update(this.user)
       .subscribe(res => {
         console.log(res['status']+':'+res['id']);

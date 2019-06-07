@@ -17,7 +17,7 @@ export class AppComponent {
 
   }
   loggedin() {
-    return this.userservice.current_user.id;
+    return (this.userservice.current_user != null);
   }
   logout() {
     this.userservice.logout();
